@@ -61,7 +61,7 @@ class JobsController extends Controller
         } else {
             $jobs = $jobs->orderBy('created_at','DESC');
         }
-        
+
 
         $jobs = $jobs->paginate(9);
 
@@ -78,10 +78,10 @@ class JobsController extends Controller
     public function detail($id) {
 
         $job = Job::where([
-                            'id' => $id, 
+                            'id' => $id,
                             'status' => 1
                         ])->with(['jobType','category'])->first();
-        
+
         if ($job == null) {
             abort(404);
         }
@@ -93,17 +93,24 @@ class JobsController extends Controller
                 'job_id' => $id
             ])->count();
         }
-        
+
 
         // fetch applicants
 
         $applications = JobApplication::where('job_id',$id)->with('user')->get();
 
 
-        return view('front.jobDetail',[ 'job' => $job,
-                                        'count' => $count,
-                                        'applications' => $applications
-                                    ]);
+        // return view('front.jobDetail',[ 'job' => $job,
+        //                                 'count' => $count,
+        //                                 'applications' => $applications
+        //                             ]);
+
+        $html = view('front.jobDetailRender', compact('job', 'count', 'applications'))->render();
+
+        return response()->json([
+            'status' => true,
+            'html' => $html
+        ]);
     }
 
     public function applyJob(Request $request) {
@@ -138,7 +145,7 @@ class JobsController extends Controller
             'user_id' => Auth::user()->id,
             'job_id' => $id
         ])->count();
-        
+
         if ($jobApplicationCount > 0) {
             $message = 'You already applied on this job.';
             session()->flash('error',$message);
@@ -158,7 +165,7 @@ class JobsController extends Controller
 
         // Send Notification Email to Employer
         $employer = User::where('id',$employer_id)->first();
-        
+
         $mailData = [
             'employer' => $employer,
             'user' => Auth::user(),
