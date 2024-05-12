@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Job;
+use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,13 +26,19 @@ class HomeController extends Controller
                         ->orderBy('created_at','DESC')
                         ->take(6)->get();
 
+        $latestPosts = Post::where('status','active')
+        // ->with('jobType')
+        ->orderBy('created_at','DESC')
+        ->take(12)->get();
+
 
 
         return view('front.home',[
             'categories' => $categories,
             'featuredJobs' => $featuredJobs,
             'latestJobs' => $latestJobs,
-            'newCategories' => $newCategories
+            'newCategories' => $newCategories,
+            'latestPosts' => $latestPosts,
         ]);
     }
 }

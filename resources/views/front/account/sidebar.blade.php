@@ -1,6 +1,6 @@
 <div class="card border-0 shadow mb-4 p-3">
     <div class="s-body text-center mt-3">
-        
+
         @if (Auth::user()->image != '')
             <img src="{{ asset('profile_pic/thumb/'.Auth::user()->image) }}" alt="avatar"  class="rounded-circle img-fluid" style="width: 150px;">
         @else
@@ -31,10 +31,10 @@
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('account.savedJobs') }}">Saved Jobs</a>
-            </li> 
+            </li>
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('account.logout') }}">Logout</a>
-            </li>                                                        
+            </li>
         </ul>
     </div>
 </div>
