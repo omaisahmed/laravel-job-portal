@@ -7,7 +7,6 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
@@ -28,14 +27,11 @@ class PostController extends Controller
 
     public function edit($id) {
         $post = Post::findOrFail($id);
-
         $categories = Category::orderBy('name','ASC')->get();
-        // $postTypes = JobType::orderBy('name','ASC')->get();
 
         return view('admin.posts.edit',[
             'post' => $post,
             'categories' => $categories,
-            // 'jobTypes' => $postTypes,
         ]);
     }
 
@@ -59,7 +55,6 @@ class PostController extends Controller
             $ext = $image->getClientOriginalExtension();
             $imageName = time().'.'.$ext;
             $image->move(public_path('/assets/images/blogs/'), $imageName);
-            // $image->storeAs('images/blogs', $imageName);
 
             $post = new Post;
             $post->user_id = auth()->user()->id;
@@ -93,7 +88,7 @@ class PostController extends Controller
             'title'=>'required',
             'subtitle' => 'required',
             'slug' => 'required',
-            'category' => 'required',
+            'category_id' => 'required',
             'status' => 'required',
             'body' => 'required',
             'image' => 'nullable|max:1999',
@@ -103,27 +98,29 @@ class PostController extends Controller
 
         if ($validator->passes()) {
 
-            if($request->hasFile('image'))
-            {
-                $filenameWithExt = $request->file('image')->getClientOriginalName();
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                $extension = $request->file('image')->getClientOriginalExtension();
-                $fileNameToStore = $filename.'_'.time().'.'.$extension;
-                $path = $request->file('image')->storeAs('/assets/images/blogs/', $fileNameToStore);
-            } else
-            {
-                $fileNameToStore = 'noimage.jpg';
-            }
-
             $post = Post::find($id);
             $post->user_id = auth()->user()->id;
-            $post->image = $fileNameToStore;
             $post->title = $request->title;
             $post->subtitle = $request->subtitle;
             $post->slug = $request->slug;
-            $post->category = $request->category;
+            $post->category_id = $request->category_id;
             $post->body = $request->body;
             $post->status = $request->status;
+
+            if ($request->hasFile('image')) {
+                if ($post->image != null) {
+                    $image_path = public_path('assets/images/blogs/' . $post->image);
+                    if (File::exists($image_path)) {
+                        File::delete($image_path);
+                    }
+                }
+                $image = $request->file('image');
+                $ext = $image->getClientOriginalExtension();
+                $imageName = time() . '.' . $ext;
+                $image->move(public_path('/assets/images/blogs/'), $imageName);
+                $post->image = $imageName;
+            }
+
             $post->save();
             // Many to many relation between Posts and Tags
             // $post->tags()->sync($request->tags);
@@ -157,11 +154,9 @@ class PostController extends Controller
             ]);
         }
 
-        if($post->image != '')
+        if($post->image != null)
         {
-            // Storage::delete('/assets/images/blogs/'.$post->image);
-            $image_path = "/public/assets/images/blogs/".$post->image;
-            // dd($image_path);
+            $image_path = public_path('assets/images/blogs/'.$post->image);
             if(File::exists($image_path)) {
                 File::delete($image_path);
             }

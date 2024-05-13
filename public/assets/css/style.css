@@ -10105,15 +10105,37 @@ footer .nav-link {
     text-align: center;
     line-height: 47px;
 }
-.card-title{font-size: 25px;}
-.card_footer{
-    background:#212529;
-    padding: 15px;
+
+.card-post {
+    height: 650px;
+    overflow: hidden;
 }
 
-.card_footer i{color: #fff; margin-right: 3px;}
-.card_footer ul{ margin-bottom: 0; text-align: center;}
-.card_footer ul li, .card_footer ul li a{ color: #fff;}
+.card-post-body {
+    height: calc(100% - 90px);
+    overflow-y: hidden;
+}
+
+.card-post-title{
+    font-size: 25px;
+}
+
+.card-post-footer{
+    background:#212529;
+    padding: 15px;
+    height: 90px;
+}
+
+.card-post-footer i{
+    color: #fff; margin-right: 3px;
+}
+.card-post-footer ul{
+     margin-bottom: 0; text-align: center;
+}
+
+.card-post-footer ul li, .card-post-footer ul li a{
+     color: #fff;
+}
 
 
 

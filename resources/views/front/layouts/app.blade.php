@@ -10,7 +10,7 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/ui/trumbowyg.min.css" integrity="sha512-Fm8kRNVGCBZn0sPmwJbVXlqfJmPC13zRsMElZenX6v721g/H7OukJd8XzDEBRQ2FSATK8xNF9UYvzsCtUpfeJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}" />	
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}" />
 	<!-- Fav Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="#" />
 </head>
@@ -26,19 +26,19 @@
 				<ul class="navbar-nav ms-0 ms-sm-0 me-auto mb-2 mb-lg-0 ms-lg-4">
 					<li class="nav-item">
 						<a class="nav-link" aria-current="page" href="{{ route('home') }}">Home</a>
-					</li>	
+					</li>
 					<li class="nav-item">
 						<a class="nav-link" aria-current="page" href="{{ route('jobs') }}">Find Jobs</a>
-					</li>										
-				</ul>				
-				
+					</li>
+				</ul>
+
 				@if (!Auth::check())
-				<a class="btn btn-outline-primary me-2" href="{{ route('account.login') }}" type="submit">Login</a>			
+				<a class="btn btn-outline-primary me-2" href="{{ route('account.login') }}" type="submit">Login</a>
 				@else
 					@if (Auth::user()->role == 'admin')
-					<a class="btn btn-outline-primary me-2" href="{{ route('admin.dashboard') }}" type="submit">Admin</a>				
-					@endif				
-					<a class="btn btn-outline-primary me-2" href="{{ route('account.profile') }}" type="submit">Account</a>			
+					<a class="btn btn-outline-primary me-2" href="{{ route('admin.dashboard') }}" type="submit">Admin</a>
+					@endif
+					<a class="btn btn-outline-primary me-2" href="{{ route('account.profile') }}" type="submit">Account</a>
 				@endif
 
 				<a class="btn btn-primary" href="{{ route('account.createJob') }}" type="submit">Post a Job</a>
@@ -66,7 +66,7 @@
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary mx-3">Update</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>            
+            </div>
         </form>
       </div>
     </div>
@@ -75,9 +75,9 @@
 
 <footer class="bg-dark py-3 bg-2">
 <div class="container">
-    <p class="text-center text-white pt-3 fw-bold fs-6">© 2023 xyz company, all right reserved</p>
+    <p class="text-center text-white pt-3 fw-bold fs-6">© 2023 Clap, all right reserved</p>
 </div>
-</footer> 
+</footer>
 <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.5.1.3.min.js') }}"></script>
 <script src="{{ asset('assets/js/instantpages.5.1.0.min.js') }}"></script>

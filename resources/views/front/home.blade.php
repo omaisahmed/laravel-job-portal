@@ -168,7 +168,7 @@
                 @if ($latestPosts->isNotEmpty())
                     @foreach ($latestPosts as $latestPost)
                         <div class="col-md-4">
-                            <div class="card">
+                            <div class="card card-post">
                                 <div class="imgContainer">
                                     <img class="card-img-top" src="/assets/images/blogs/{{ $latestPost->image }}"
                                         alt="Clap" class="img-responsive">
@@ -179,14 +179,14 @@
                                         class="btn_right_floating ml-auto">
                                         <i class="fa fa-arrow-right"></i></a>
                                 </div>
-                                <div class="card-body">
-                                    <h4 class="card-title pb-0">{{ $latestPost->title }}</h4>
+                                <div class="card-body card-post-body">
+                                    <h4 class="card-title card-post-title pb-0">{{ $latestPost->title }}</h4>
                                     <hr>
                                     <p class="card-text">
-                                    <p>{{ Str::words(strip_tags($latestPost->body), $words = 20, '...') }}</p>
+                                    <p>{{ Str::words(strip_tags($latestPost->body), $words = 10, '...') }}</p>
                                     </p>
                                 </div>
-                                <div class="card_footer">
+                                <div class="card-post-footer">
                                     <ul class="list-unstyled list-inline font-small">
                                         <li class="list-inline-item white-text mr-4"><i
                                                 class="fa fa-clock"></i>{{ $latestPost->craeted_at }}</li>
