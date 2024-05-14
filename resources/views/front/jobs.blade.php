@@ -44,7 +44,7 @@
             <div class="row">
 
                 <div class="col-md-5 col-lg-6">
-                    <div class="job_listing_area">
+                    <div class="job_listing_area scroll-jobs">
                         <div class="job_lists">
                             <div class="row">
                                 @if ($jobs->isNotEmpty())
@@ -77,7 +77,7 @@
                                                 </div>
 
                                                 <div class="d-grid mt-3">
-                                                    <a href="{{ route('jobDetail',$job->id) }}" data-job="{{$job->id}}" class="btn btn-primary btn-lg job-detail">Details</a>
+                                                    <a href="javascript:void(0);" data-job="{{$job->id}}" class="btn btn-primary btn-lg job-detail">Details</a>
                                                 </div>
                                             </div>
                                         </div>
