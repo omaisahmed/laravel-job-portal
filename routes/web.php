@@ -59,6 +59,14 @@ Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
         Route::get('/posts/{slug}', [PostController::class, 'show'])->name('admin.posts.show');
         Route::delete('/posts/delete',[PostController::class,'destroy'])->name('admin.posts.destroy');
     });
+    Route::group(['prefix' => 'categories'], function() {
+        Route::get('/', [CategoryController::class, 'index'])->name('admin.categories.index');
+        Route::get('/create', [CategoryController::class, 'create'])->name('admin.categories.create');
+        Route::post('/store', [CategoryController::class, 'store'])->name('admin.categories.store');
+        Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('admin.categories.edit');
+        Route::put('/update/{id}', [CategoryController::class, 'update'])->name('admin.categories.update');
+        Route::delete('/delete', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+    });
 });
 
 Route::group(['prefix' => 'account'], function(){

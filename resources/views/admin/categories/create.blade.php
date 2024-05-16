@@ -9,7 +9,7 @@
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="{{ route("admin.dashboard") }}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ route("admin.categories.index") }}">Categories</a></li>
-                        <li class="breadcrumb-item active">Edit</li>
+                        <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </nav>
             </div>
@@ -21,24 +21,24 @@
             <div class="col-lg-9">
                 @include('front.message')
 
-                <form action="" method="post" id="editCategoryForm" name="editCategoryForm">
+                <form action="" method="post" id="createCategoryForm" name="createCategoryForm">
                     <div class="card border-0 shadow mb-4 ">
                         <div class="card-body card-form p-4">
-                            <h3 class="fs-4 mb-1">Edit Category</h3>
+                            <h3 class="fs-4 mb-1">Create Category</h3>
                             <div class="row">
                                 <div class="col-md-6 mb-2">
                                     <label for="" class="mb-2">Name<span class="req">*</span></label>
-                                    <input value="{{ $category->name }}" type="text" placeholder="Name" id="name" name="name" class="form-control">
+                                    <input type="text" placeholder="Name" id="name" name="name" class="form-control">
                                     <p></p>
                                     <div class="status-radio">
                                         <div class="form-check-inline">
-                                            <input {{ ($category->status == 1) ? 'checked' : '' }} class="form-check-input" type="radio" value="1" id="status-active" name="status">
+                                            <input class="form-check-input" type="radio" value="1" id="status-active" name="status" checked>
                                             <label class="form-check-label" for="status">
                                                 Active
                                             </label>
                                         </div>
                                         <div class="form-check-inline">
-                                            <input {{ ($category->status == 0) ? 'checked' : '' }} class="form-check-input" type="radio" value="0" id="status-block" name="status">
+                                            <input class="form-check-input" type="radio" value="0" id="status-block" name="status">
                                             <label class="form-check-label" for="status">
                                                 Inactive
                                             </label>
@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div class="card-footer p-4">
-                            <button type="submit" class="btn btn-primary">Update Category</button>
+                            <button type="submit" class="btn btn-primary">Create Category</button>
                         </div>
                     </div>
                 </form>
@@ -61,14 +61,14 @@
 
 @section('customJs')
 <script type="text/javascript">
-    $("#editCategoryForm").submit(function(e){
+    $("#createCategoryForm").submit(function(e){
         e.preventDefault();
         $("button[type='submit']").prop('disabled',true);
         $.ajax({
-            url: '{{ route("admin.categories.update",$category->id) }}',
-            type: 'PUT',
+            url: '{{ route("admin.categories.store") }}',
+            type: 'POST',
             dataType: 'json',
-            data: $("#editCategoryForm").serializeArray(),
+            data: $("#createCategoryForm").serializeArray(),
             success: function(response) {
                 $("button[type='submit']").prop('disabled',false);
                 if(response.status == true) {

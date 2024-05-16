@@ -1,4 +1,3 @@
-@include('front.message')
 <div class="card shadow border-0 px-5 py-5">
     <div class="job_details_header">
         <div class="single_jobs white-bg d-flex justify-content-between">

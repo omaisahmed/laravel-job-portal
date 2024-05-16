@@ -98,6 +98,7 @@
                     <div class="job-loader d-none">
                         <div class="background-masker btn-divide-left"></div>
                       </div>
+                      @include('front.message')
                     <div id="job_listing_area">
                     </div>
                 </div>
@@ -298,6 +299,34 @@
             }
         });
     });
+
+    function applyJob(id){
+        if (confirm("Are you sure you want to apply on this job?")) {
+            $.ajax({
+                url : '{{ route("applyJob") }}',
+                type: 'post',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response) {
+                    // window.location.href = "{{ url()->current() }}";
+                    console.log(response);
+                }
+            });
+        }
+    }
+
+    function saveJob(id){
+        $.ajax({
+            url : '{{ route("saveJob") }}',
+            type: 'post',
+            data: {id:id},
+            dataType: 'json',
+            success: function(response) {
+                // window.location.href = "{{ url()->current() }}";
+                console.log(response);
+            }
+        });
+    }
 
 </script>
 @endsection

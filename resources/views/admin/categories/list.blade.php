@@ -8,7 +8,7 @@
                 <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="{{ route("admin.dashboard") }}">Home</a></li>
-                        <li class="breadcrumb-item active">Jobs</li>
+                        <li class="breadcrumb-item active">Categories</li>
                     </ol>
                 </nav>
             </div>
@@ -19,13 +19,14 @@
             </div>
             <div class="col-lg-9">
                 @include('front.message')
-                <div class="card border-0 shadow mb-4">
+                <div class="card border-0 shadow mb-4 p-3">
                     <div class="card-body card-form">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <h3 class="fs-4 mb-1">Posts</h3>
+                                <h3 class="fs-4 mb-1">Categories</h3>
                             </div>
                             <div style="margin-top: -10px;">
+                                <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">Create Category</a>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -33,39 +34,34 @@
                                 <thead class="bg-light">
                                     <tr>
                                         <th scope="col">ID</th>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Created By</th>
+                                        <th scope="col">Name</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody class="border-0">
-                                    @if ($posts->isNotEmpty())
-                                        @foreach ($posts as $post)
+                                    @if ($categories->isNotEmpty())
+                                        @foreach ($categories as $category)
                                         <tr>
-                                            <td>{{ $post->id }}</td>
+                                            <td>{{ $category->id }}</td>
+                                            <td>{{ $category->name }}</td>
                                             <td>
-                                                <p>{{ $post->title }}</p>
-                                                <p>Applicants: {{ $post->applications->count() }}</p>
-                                            </td>
-                                            <td>{{ $post->user->name }}</td>
-                                            <td>
-                                                @if ($post->status == 1)
+                                                @if ($category->status == 1)
                                                     <p class="text-success">Active</p>
                                                 @else
                                                     <p class="text-danger">Block</p>
                                                 @endif
                                             </td>
-                                            <td>{{ \Carbon\Carbon::parse($post->created_at)->format('d M, Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($category->created_at)->format('d M, Y') }}</td>
                                             <td>
-                                                <div class="action-dots ">
+                                                <div class="action-dots">
                                                     <button href="#" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-end">
-                                                        <li><a class="dropdown-item" href="{{ route('admin.jobs.edit',$post->id) }}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
-                                                        <li><a class="dropdown-item" onclick="deletePost({{ $post->id }})" href="javascript:void(0);"  ><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('admin.categories.edit',$category->id) }}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
+                                                        <li><a class="dropdown-item" onclick="deleteCategory({{ $category->id }})" href="javascript:void(0);"  ><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -76,7 +72,7 @@
                             </table>
                         </div>
                         <div>
-                            {{ $posts->links() }}
+                            {{ $categories->links() }}
                         </div>
                     </div>
                 </div>
@@ -88,15 +84,15 @@
 
 @section('customJs')
 <script type="text/javascript">
-    function deletePost(id) {
+    function deleteCategory(id) {
         if (confirm("Are you sure you want to delete?")) {
             $.ajax({
-                url: '{{ route("admin.blogs.destroy") }}',
+                url: '{{ route("admin.categories.destroy") }}',
                 type: 'delete',
                 data: { id: id},
                 dataType: 'json',
                 success: function(response) {
-                    window.location.href = "{{ route('admin.blogs.index') }}";
+                    window.location.href = "{{ route('admin.categories.index') }}";
                 }
             });
         }
